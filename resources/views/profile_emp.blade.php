@@ -33,16 +33,16 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col d-flex flex-column">
                     <div class="tab-content card-body">
                         <div class="tab-pane fade active show" id="tabs-home-8">
                             <h2 class="mb-4 card-title">My Settings</h2>
-                            <x-profile.account-card />
+                            {{-- <x-profile.account-card /> --}}
                         </div>
                         <div class="tab-pane fade" id="tabs-activity-8">
                             <h2 class="mb-4 card-title">Activity tab</h2>
-                            <x-profile.settings-card />
+                            {{-- <x-profile.settings-card /> --}}
                         </div>
                     </div>
                     <div class="card-footer bg-transparent mt-auto">
