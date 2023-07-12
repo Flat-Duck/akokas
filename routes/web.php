@@ -42,7 +42,7 @@ Route::prefix('/app')
     });
 
     Route::domain('admin.akokas.com')->group(function () {
-        Route::get('user/{id}', function () {
+        Route::get('/', function () {
             return "CP";
-        });
+        })->name('home');
     });
