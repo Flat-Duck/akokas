@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body  text-truncate" style="max-height: 30rem;">
+    <div class="card-body  text-truncate" style="max-height: 300rem;">
         <img src="{{$post->screen}}">
         {{-- <a href="{{route('posts.show',['post'=>$post->id])}}"> <h1 class="card-title">{{ $post->title }}</h1></a> --}}
         {{-- {!! $post->content !!} --}}

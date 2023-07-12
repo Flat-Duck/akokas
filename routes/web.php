@@ -40,3 +40,9 @@ Route::prefix('/app')
     ->group(function () {
         Route::get('posts', [PostController::class, 'all']);
     });
+
+    Route::domain('admin.akokas.com')->group(function () {
+        Route::get('user/{id}', function () {
+            return "CP";
+        });
+    });
