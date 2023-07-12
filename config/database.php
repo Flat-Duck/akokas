@@ -58,15 +58,15 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array([
-                PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
-                PDO::MYSQL_ATTR_SSL_KEY => '/var/www/html/certs/ca.pem',
-                PDO::MYSQL_ATTR_SSL_CERT => '/var/www/html/certs/ca.pem',
-                PDO::MYSQL_ATTR_SSL_CA => '/var/www/html/certs/ca.pem',
-             ]) : [],
-            // 'options' => extension_loaded('pdo_mysql') ? array_filter([
-            //     PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            // ]) : [],
+            // 'options' => extension_loaded('pdo_mysql') ? array([
+            //     PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+            //     PDO::MYSQL_ATTR_SSL_KEY => '/var/www/html/certs/ca.pem',
+            //     PDO::MYSQL_ATTR_SSL_CERT => '/var/www/html/certs/ca.pem',
+            //     PDO::MYSQL_ATTR_SSL_CA => '/var/www/html/certs/ca.pem',
+            //  ]) : [],
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
         ],
 
         'pgsql' => [
