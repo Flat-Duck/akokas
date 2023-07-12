@@ -44,5 +44,5 @@ Route::prefix('/app')
     Route::domain('admin.akokas.com')->group(function () {
         Route::get('/', function () {
             return "CP";
-        })->name('home');
+        })->name('admin.home');
     });
