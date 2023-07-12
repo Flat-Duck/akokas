@@ -37,14 +37,8 @@ Route::name('api.')
         Route::apiResource('users', UserController::class);
 
         // User Posts
-        Route::get('/users/{user}/posts', [
-            UserPostsController::class,
-            'index',
-        ])->name('users.posts.index');
-        Route::post('/users/{user}/posts', [
-            UserPostsController::class,
-            'store',
-        ])->name('users.posts.store');
+        Route::get('/users/{user}/posts', [UserPostsController::class,'index',])->name('users.posts.index');
+        Route::post('/users/{user}/posts', [UserPostsController::class,'store',])->name('users.posts.store');
 
         Route::apiResource('posts', PostController::class);
     });

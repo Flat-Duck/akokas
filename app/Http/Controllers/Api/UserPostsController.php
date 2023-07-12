@@ -17,13 +17,13 @@ class UserPostsController extends Controller
      */
     public function index(Request $request, User $user)
     {
-        $this->authorize('view', $user);
+     //   $this->authorize('view', $user);
 
-        $search = $request->get('search', '');
+       // $search = $request->get('search', '');
 
         $posts = $user
             ->posts()
-            ->search($search)
+        //    ->search($search)
             ->latest()
             ->paginate();
 
