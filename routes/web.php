@@ -18,6 +18,12 @@ use App\Http\Controllers\PermissionController;
 |
 */
 
+Route::domain('admin.akokas.com')->group(function () {
+    Route::get('/', function () {
+        return "CP";
+    });
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -41,8 +47,4 @@ Route::prefix('/app')
         Route::get('posts', [PostController::class, 'all']);
     });
 
-    Route::domain('admin.akokas.com')->group(function () {
-        Route::get('/', function () {
-            return "CP";
-        })->name('admin.home');
-    });
+
