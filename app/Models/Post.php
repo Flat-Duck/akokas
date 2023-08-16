@@ -14,7 +14,7 @@ class Post extends Model implements HasMedia
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['body', 'user_id'];
+    protected $fillable = ['user_id', 'body'];
     protected $appends = [ 'screen'];
 
     protected $searchableFields = ['*'];

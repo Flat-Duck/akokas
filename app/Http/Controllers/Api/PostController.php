@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\PostCollection;
 use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\PostUpdateRequest;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -18,7 +20,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('view-any', Post::class);
+       // $this->authorize('view-any', Post::class);
 
         $search = $request->get('search', '');
 
@@ -33,13 +35,27 @@ class PostController extends Controller
      * @param \App\Http\Requests\PostStoreRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostStoreRequest $request)
+    public function store(Request $request)
     {
-        $this->authorize('create', Post::class);
+        $request->merge(['user_id' => auth()->user()->id]);
 
-        $validated = $request->validated();
+        $validator =  Validator::make($request->all(), [
+            'body' => ['required','max:255', 'string'],
+            'screen' => ['required','file'],
+            'user_id' => ['numeric'],
+        ]);
 
-        $post = Post::create($validated);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
+        }else{
+            $data = $validator->valid();
+        }
+
+        $post = Post::create($data);
+
+        if (request()->has(['screen'])) {
+            $post->addMediaFromRequest('screen')->toMediaCollection('post_screens');
+        }
 
         return new PostResource($post);
     }
