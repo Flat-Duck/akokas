@@ -10,6 +10,7 @@ use App\Http\Resources\PostCollection;
 use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\PostUpdateRequest;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
@@ -21,13 +22,13 @@ class PostController extends Controller
     public function index(Request $request)
     {
        // $this->authorize('view-any', Post::class);
-
+       $user = Auth::user();
         $search = $request->get('search', '');
 
         $posts = Post::search($search)
             ->latest()
             ->paginate();
-
+        $user->attachLikeStatus($posts);
         return new PostCollection($posts);
     }
 
@@ -99,6 +100,30 @@ class PostController extends Controller
 
         $post->delete();
 
+        return response()->noContent();
+    }
+
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Post $post
+     * @return \Illuminate\Http\Response
+     */
+    public function like(Request $request, Post $post)
+    {
+        $user = Auth::user();
+        return $user->like($post);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Post $post
+     * @return \Illuminate\Http\Response
+     */
+    public function unlike(Request $request, Post $post)
+    {
+        $user = Auth::user();
+        $user->unlike($post);
         return response()->noContent();
     }
 }

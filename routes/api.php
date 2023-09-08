@@ -40,5 +40,9 @@ Route::name('api.')
         Route::get('/users/{user}/posts', [UserPostsController::class,'index',])->name('users.posts.index');
         Route::post('/users/{user}/posts', [UserPostsController::class,'store',])->name('users.posts.store');
 
+        Route::post('/posts/{post}/like', [PostController::class,'like',]);
+        Route::post('/posts/{post}/unlike', [PostController::class,'unlike',]);//->name('users.posts.store');
+
+
         Route::apiResource('posts', PostController::class);
     });

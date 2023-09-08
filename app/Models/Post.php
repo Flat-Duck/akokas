@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Scopes\Searchable;
+use App\Traits\Likeable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -13,6 +14,7 @@ class Post extends Model implements HasMedia
     use InteractsWithMedia;
     use HasFactory;
     use Searchable;
+    use Likeable;
 
     protected $fillable = ['user_id', 'body'];
     protected $appends = [ 'screen'];
