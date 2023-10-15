@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UserCollection;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -57,6 +58,12 @@ class UserController extends Controller
     public function show(Request $request, User $user)
     {
         $this->authorize('view', $user);
+        
+        if(is_null($user->id)){
+            $user = Auth::user();
+        }
+
+        $user->load('posts.comments.comments');
 
         return new UserResource($user);
     }

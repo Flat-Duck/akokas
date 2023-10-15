@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Resources\PostResource;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostCollection;
-use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\PostUpdateRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -80,9 +79,9 @@ class PostController extends Controller
      */
     public function update(PostUpdateRequest $request, Post $post)
     {
-        $this->authorize('update', $post);
+       // $this->authorize('update', $post);
 
-        $validated = $request->validated();
+      //  $validated = $request->validated();
 
         $post->update($validated);
 

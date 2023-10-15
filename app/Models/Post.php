@@ -6,6 +6,7 @@ use App\Models\Scopes\Searchable;
 use App\Traits\Likeable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Comments\Models\Concerns\HasComments;
 
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -14,6 +15,8 @@ class Post extends Model implements HasMedia
     use InteractsWithMedia;
     use HasFactory;
     use Searchable;
+    use HasComments;
+
     use Likeable;
 
     protected $fillable = ['user_id', 'body'];
@@ -37,6 +40,24 @@ class Post extends Model implements HasMedia
 
         $cover = $this->getMedia('post_screens')->last();
         return $cover? $cover->getUrl(): null;
+
+    }
+
+    /*
+    * This string will be used in notifications on what a new comment
+    * was made.
+    */
+    public function commentableName(): string
+    {
+        //
+    }
+
+    /*
+    * This URL will be used in notifications to let the user know
+    * where the comment itself can be read.
+    */
+    public function commentUrl(): string
+    {
 
     }
 }

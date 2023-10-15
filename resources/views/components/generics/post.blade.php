@@ -32,6 +32,7 @@
     </div>
     <div class="card-footer d-flex align-items-center">
         <div class="row align-items-center">
+            <livewire:comments :model="$post" />
             {{-- <x-card.footer-user-counter :users="$post->commenters()" /> --}}
         </div>
       </div>
