@@ -20,7 +20,8 @@ class Post extends Model implements HasMedia
     use Likeable;
 
     protected $fillable = ['user_id', 'body'];
-    protected $appends = [ 'screen'];
+    protected $appends = [ 'screen','likes_count','comments_count'];
+    protected $with = ['comments'];
 
     protected $searchableFields = ['*'];
 
@@ -40,6 +41,28 @@ class Post extends Model implements HasMedia
 
         $cover = $this->getMedia('post_screens')->last();
         return $cover? $cover->getUrl(): null;
+
+    }
+
+    /**
+     * The tags that belong to the Post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function getLikesCountAttribute()
+    {
+        return $this->likers()->count();
+
+    }
+
+    /**
+     * The tags that belong to the Post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function getCommentsCountAttribute()
+    {
+        return $this->comments()->count();
 
     }
 
