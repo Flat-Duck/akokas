@@ -6,9 +6,11 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CommentsController;
+use App\Http\Controllers\Api\FCMController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserPostsController;
 use App\Http\Controllers\Api\PermissionController;
+use App\Http\Controllers\Api\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,7 @@ use App\Http\Controllers\Api\PermissionController;
 */
 
 Route::post('/login', [AuthController::class, 'login'])->name('api.login');
+Route::post('/register', [AuthController::class, 'register'])->name('api.register');
 
 // Route::middleware('auth:sanctum')
 //     ->get('/user', function (Request $request) {
@@ -44,6 +47,7 @@ Route::name('api.')
         Route::apiResource('permissions', PermissionController::class);
 
         Route::apiResource('users', UserController::class);
+        Route::apiResource('notifications', NotificationController::class);
 
         // User Posts
         Route::get('/users/{user}/posts', [UserPostsController::class,'index',])->name('users.posts.index');
@@ -58,5 +62,7 @@ Route::name('api.')
         Route::apiResource('posts', PostController::class);
         Route::post('comments/{comment}/reply', [CommentsController::class,'reply']);
         Route::apiResource('comments', CommentsController::class);
-
+        
+        Route::put('token/refresh', [FCMController::class,'refresh_token']);
     });
+    Route::post('device/register', [FCMController::class,'register_device']);

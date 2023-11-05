@@ -8,6 +8,7 @@ use App\Http\Resources\PostResource;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostCollection;
 use App\Http\Requests\PostUpdateRequest;
+use App\Notifications\YourPostGotNewLike;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -111,6 +112,8 @@ class PostController extends Controller
     public function like(Request $request, Post $post)
     {
         $user = Auth::user();
+        $post->user->alret("You Got new Like");
+        $post->user->notify(new YourPostGotNewLike());
         return $user->like($post);
     }
 

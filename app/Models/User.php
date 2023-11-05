@@ -22,6 +22,8 @@ class User extends Authenticatable implements CanComment
     use Searchable;
     use HasApiTokens;
     use Liker;
+    use Notifiable;
+
 
     protected $fillable = ['name', 'email', 'password'];
 
@@ -38,9 +40,25 @@ class User extends Authenticatable implements CanComment
         return $this->hasMany(Post::class);
     }
 
+    public function devices()
+    {
+        return $this->hasMany(Device::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
     public function isSuperAdmin()
     {
         return $this->hasRole('super-admin');
+    }
+    public function alret($message)
+    {
+        $this->notifications()->create([
+            'body' => $message
+        ]);
     }
 
     /*
@@ -59,5 +77,15 @@ class User extends Authenticatable implements CanComment
     public function commentUrl(): string
     {
 
+    }
+
+    /**
+     * Specifies the user's FCM token
+     *
+     * @return string|array
+     */
+    public function routeNotificationForFcm()
+    {
+        return $this->devices->pluck('fcm_token')->toArray();
     }
 }
