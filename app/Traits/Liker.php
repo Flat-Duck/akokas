@@ -12,7 +12,6 @@ use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
 
-
 trait Liker
 {
     public function like(Model $object): Like

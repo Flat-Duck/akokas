@@ -77,9 +77,9 @@ class PostController extends Controller
         // dd($validated);
 
         $post = Post::create($request->all());
-          if (request()->has(['screen'])) {
-                  $post->addMediaFromRequest('screen')->toMediaCollection('post_screens');
-              }
+        if (request()->has(['screen'])) {
+                $post->addMediaFromRequest('screen')->toMediaCollection('post_screens');
+        }
           return redirect()->route('posts.index')->with([
               'type' => 'success',
               'message' => 'تمت الاضافة بنجاح'

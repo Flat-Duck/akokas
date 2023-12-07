@@ -58,8 +58,8 @@ class UserController extends Controller
     public function show(Request $request, User $user)
     {
         $this->authorize('view', $user);
-        
-        if(is_null($user->id)){
+
+        if (is_null($user->id)) {
             $user = Auth::user();
         }
 

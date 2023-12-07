@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
@@ -18,7 +19,6 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
         if (!auth()->attempt($credentials)) {
             throw ValidationException::withMessages([
                 'email' => [trans('auth.failed')],
@@ -26,9 +26,7 @@ class AuthController extends Controller
         }
 
         $user = User::whereEmail($request->email)->firstOrFail();
-
         $token = $user->createToken('auth-token');
-
         return response()->json([
             'token' => $token->plainTextToken,
         ]);

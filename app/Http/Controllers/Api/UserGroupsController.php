@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
@@ -17,15 +18,12 @@ class UserGroupsController extends Controller
     public function index(Request $request, User $user)
     {
         $this->authorize('view', $user);
-
         $search = $request->get('search', '');
-
         $groups = $user
             ->groups()
             ->search($search)
             ->latest()
             ->paginate();
-
         return new GroupCollection($groups);
     }
 
@@ -38,9 +36,7 @@ class UserGroupsController extends Controller
     public function store(Request $request, User $user, Group $group)
     {
         $this->authorize('update', $user);
-
         $user->groups()->syncWithoutDetaching([$group->id]);
-
         return response()->noContent();
     }
 
@@ -53,9 +49,7 @@ class UserGroupsController extends Controller
     public function destroy(Request $request, User $user, Group $group)
     {
         $this->authorize('update', $user);
-
         $user->groups()->detach($group);
-
         return response()->noContent();
     }
 }

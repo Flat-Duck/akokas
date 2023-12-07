@@ -13,7 +13,9 @@ use Illuminate\Queue\SerializesModels;
 
 class Liked
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
      /**
      * @var \Illuminate\Database\Eloquent\Model

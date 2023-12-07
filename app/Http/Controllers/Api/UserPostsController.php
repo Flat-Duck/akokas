@@ -13,7 +13,7 @@ class UserPostsController extends Controller
     /**
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User $user
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\PostCollection
      */
     public function index(Request $request, User $user)
     {
@@ -33,7 +33,7 @@ class UserPostsController extends Controller
     /**
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User $user
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\PostResource
      */
     public function store(Request $request, User $user)
     {

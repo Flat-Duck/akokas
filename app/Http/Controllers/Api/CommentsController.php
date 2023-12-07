@@ -6,11 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
-
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Comments\Models\Comment;
+use App\Models\Comment;
 
 class CommentsController extends Controller
 {
@@ -37,22 +36,25 @@ class CommentsController extends Controller
     {
         $request->merge(['user_id' => auth()->user()->id]);
 
-        $validator =  Validator::make($request->all(), [
+        $validator =  Validator::make(
+            $request->all(),
+            [
             'text' => ['required','max:255', 'string'],
             'post_id' =>['required','exists:posts,id'],
             'user_id' => ['numeric'],
-        ]);
+            ]
+        );
 
         $post = Post::findOrfail($request->post_id);
 
         if ($validator->fails()) {
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
-        }else{
+        } else {
             $data = $validator->valid();
         }
 
         $comment = $post->comment($request->text);
-        
+
         $post->load('comments');
         // if (request()->has(['screen'])) {
         //     $post->addMediaFromRequest('screen')->toMediaCollection('post_screens');
@@ -68,21 +70,24 @@ class CommentsController extends Controller
     {
         $request->merge(['user_id' => auth()->user()->id]);
 
-        $validator =  Validator::make($request->all(), [
+        $validator =  Validator::make(
+            $request->all(),
+            [
             'text' => ['required','max:255', 'string'],
             'user_id' => ['numeric'],
-        ]);
+            ]
+        );
 
        // $post = Post::findOrfail($request->post_id);
 
         if ($validator->fails()) {
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
-        }else{
+        } else {
             $data = $validator->valid();
         }
 
         $comment->comment($request->text);
-        
+
         $comment->load('comments');
         // if (request()->has(['screen'])) {
         //     $post->addMediaFromRequest('screen')->toMediaCollection('post_screens');
@@ -110,7 +115,7 @@ class CommentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Comment $comment)
+    public function update(Request $request, Comment $comment)
     {
         $request->merge(['user_id' => auth()->user()->id]);
 
@@ -121,7 +126,7 @@ class CommentsController extends Controller
 
         if ($validator->fails()) {
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
-        }else{
+        } else {
             $data = $validator->valid();
         }
 

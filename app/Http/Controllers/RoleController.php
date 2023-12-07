@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-class RoleController extends Controller {
-
+class RoleController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request) 
+    public function index(Request $request)
     {
         $this->authorize('list', Role::class);
 
@@ -30,7 +30,7 @@ class RoleController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() 
+    public function create()
     {
         $this->authorize('create', Role::class);
 
@@ -45,7 +45,7 @@ class RoleController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) 
+    public function store(Request $request)
     {
 
         $this->authorize('create', Role::class);
@@ -71,7 +71,7 @@ class RoleController extends Controller {
      * @param  \Spatie\Permission\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role) 
+    public function show(Role $role)
     {
         $this->authorize('view', Role::class);
 
@@ -84,7 +84,7 @@ class RoleController extends Controller {
      * @param  \Spatie\Permission\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role) 
+    public function edit(Role $role)
     {
         $this->authorize('update', $role);
 
@@ -102,7 +102,7 @@ class RoleController extends Controller {
      * @param  \Spatie\Permission\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role) 
+    public function update(Request $request, Role $role)
     {
         $this->authorize('update', $role);
 
@@ -110,7 +110,7 @@ class RoleController extends Controller {
             'name' => 'required|max:32|unique:roles,name,'.$role->id,
             'permissions' => 'array',
         ]);
-        
+
         $role->update($data);
 
         $permissions = Permission::find($request->permissions);

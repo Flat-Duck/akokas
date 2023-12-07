@@ -7,9 +7,10 @@ use App\Traits\Likeable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Comments\Models\Concerns\HasComments;
-
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+
 class Post extends Model implements HasMedia
 {
     use InteractsWithMedia;
@@ -20,7 +21,7 @@ class Post extends Model implements HasMedia
     use Likeable;
 
     protected $fillable = ['user_id', 'body'];
-    protected $appends = [ 'screen','likes_count','comments_count'];
+    protected $appends = [ 'screen','likes_count','comments_count','author_name','author_avatar'];
     protected $with = ['comments'];
 
     protected $searchableFields = ['*'];
@@ -41,7 +42,27 @@ class Post extends Model implements HasMedia
 
         $cover = $this->getMedia('post_screens')->last();
         return $cover? $cover->getUrl(): null;
+    }
 
+     /**
+     * The tags that belong to the Post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function getAuthorNameAttribute()
+    {
+        return $this->user->name;
+    }
+
+
+    /**
+     * The tags that belong to the Post
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function getAuthorAvatarAttribute()
+    {
+        return "https://picsum.photos/200#" . Str::random(3);
     }
 
     /**
@@ -52,7 +73,6 @@ class Post extends Model implements HasMedia
     public function getLikesCountAttribute()
     {
         return $this->likers()->count();
-
     }
 
     /**
@@ -63,7 +83,6 @@ class Post extends Model implements HasMedia
     public function getCommentsCountAttribute()
     {
         return $this->comments()->count();
-
     }
 
     /*
@@ -81,6 +100,5 @@ class Post extends Model implements HasMedia
     */
     public function commentUrl(): string
     {
-
     }
 }

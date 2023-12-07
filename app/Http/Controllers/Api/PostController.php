@@ -21,7 +21,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
        // $this->authorize('view-any', Post::class);
-       $user = Auth::user();
+        $user = Auth::user();
         $search = $request->get('search', '');
 
         $posts = Post::search($search)
@@ -47,7 +47,7 @@ class PostController extends Controller
 
         if ($validator->fails()) {
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
-        }else{
+        } else {
             $data = $validator->valid();
         }
 
