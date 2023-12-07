@@ -14,7 +14,7 @@ class Comment extends CommentModel
     /**
      * The tags that belong to the Post
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return string
      */
     public function getAuthorNameAttribute()
     {
@@ -25,7 +25,7 @@ class Comment extends CommentModel
     /**
      * The tags that belong to the Post
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return string
      */
     public function getAuthorAvatarAttribute()
     {
